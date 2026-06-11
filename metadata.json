@@ -1,0 +1,6 @@
+{
+  "name": "Milyoner Bilgi Yarışması",
+  "description": "Klasik milyoner formatında, zorluk derecelerine göre kategorize edilmiş sorular ve interaktif jokerler (Seyirci, Telefon, Yarı Yarıya, Soru Değiştirme) içeren ses efektli bilgi yarışması oyunu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

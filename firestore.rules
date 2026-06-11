@@ -1,0 +1,92 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Global Safety Net - Default Deny Catch-All
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Global Helper Primitives
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // 3. Validation helper for highscore entities to prevent shadow fields and type poisoning
+    function isValidHighScore(data) {
+      return data.keys().hasAll(['nickname', 'prize', 'prizeAmount', 'levelReached', 'walkedAway', 'userId', 'createdAt'])
+        && data.keys().size() == 7
+        && data.nickname is string
+        && data.nickname.size() >= 1
+        && data.nickname.size() <= 20
+        && data.prize is string
+        && data.prize.size() <= 32
+        && data.prizeAmount is int
+        && data.prizeAmount >= 0
+        && data.prizeAmount <= 1000000
+        && data.levelReached is int
+        && data.levelReached >= 0
+        && data.levelReached <= 15
+        && data.walkedAway is bool
+        && data.userId is string
+        && data.userId == request.auth.uid
+        && data.createdAt == request.time;
+    }
+
+    // 4. Secure rules for highscores collection match
+    match /highscores/{highscoreId} {
+      // Validate the document ID parameter to prevent poisoning
+      allow get: if isValidId(highscoreId);
+      
+      // Allow query lists
+      allow list: if true;
+
+      // Allow creating a highscore - must be signed in (anonymous or logged in)
+      allow create: if isSignedIn()
+        && isValidId(highscoreId)
+        && isValidHighScore(incoming());
+
+      // High scores are IMMUTABLE. Cheating is forbidden.
+      allow update, delete: if false;
+    }
+
+   // 5. Secure rules for duel rooms
+    match /rooms/{roomId} {
+      // Herkes giriş yaptıysa odayı arayabilir ve çekebilir
+      allow get: if isSignedIn() && isValidId(roomId);
+      allow list: if isSignedIn();
+      
+      // Oda oluşturma kuralı
+      allow create: if isSignedIn()
+        && isValidId(roomId)
+        && incoming().status == 'waiting'
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+        
+      // Odaya katılım ve güncelleme izni
+      allow update: if isSignedIn()
+        && isValidId(roomId)
+        && (
+          // Durum 1: Oda 'waiting' modundaysa, içeriye yeni giren kişi (Player 2) kendisini ekleyebilir ve durumu 'playing' yapabilir.
+          (resource.data.status == 'waiting' && incoming().status == 'playing' && incoming().updatedAt == request.time)
+          
+          ||
+          
+          // Durum 2: Odadaki mevcut oyunculardan biri odayı güncelleyebilir (Lobi durumunda veya oyun oynanırken)
+          (request.auth.uid in resource.data.players && incoming().updatedAt == request.time)
+        );
+        
+      allow delete: if isSignedIn()
+        && isValidId(roomId)
+        && request.auth.uid in resource.data.players;
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "entities": {
+    "highscore": {
+      "title": "HighScore",
+      "description": "Leaderboard score record for Milyoner Bilgi Yarışması",
+      "type": "object",
+      "properties": {
+        "nickname": {
+          "type": "string",
+          "description": "Competitor name"
+        },
+        "prize": {
+          "type": "string",
+          "description": "The formatted Turkish Lira prize won"
+        },
+        "prizeAmount": {
+          "type": "integer",
+          "description": "The raw numeric lira amount won"
+        },
+        "levelReached": {
+          "type": "integer",
+          "description": "Target level achieved (0-15)"
+        },
+        "walkedAway": {
+          "type": "boolean",
+          "description": "True if player retired safely, false if failed"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Authenticated user UID"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server side timestamp"
+        }
+      },
+      "required": [
+        "nickname",
+        "prize",
+        "prizeAmount",
+        "levelReached",
+        "walkedAway",
+        "userId",
+        "createdAt"
+      ]
+    },
+    "duelroom": {
+      "title": "DuelRoom",
+      "description": "Active real-time matchmaking or game room for multiplayer duels",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["waiting", "starting", "playing", "game_over"]
+        },
+        "questionIds": {
+          "type": "array"
+        },
+        "players": {
+          "type": "object"
+        },
+        "winnerId": {
+          "type": "string"
+        },
+        "winnerNickname": {
+          "type": "string"
+        },
+        "winnerReason": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "status",
+        "questionIds",
+        "players",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/highscores/{highscoreId}": {
+      "schema": "highscore",
+      "description": "Collection of all high scores in the game"
+    },
+    "/rooms/{roomId}": {
+      "schema": "duelroom",
+      "description": "Active real-time duel rooms matching players"
+    }
+  }
+}
