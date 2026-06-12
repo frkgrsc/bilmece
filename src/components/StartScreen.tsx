@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Trophy, Play, Volume2, VolumeX, Clock, Coins, User, Globe, ShieldAlert, Swords } from 'lucide-react';
+import { Trophy, Play, Volume2, VolumeX, Clock, Coins, User, Globe, ShieldAlert, Swords, Award } from 'lucide-react';
 import { HighScore } from '../types';
 import audio from '../utils/audio';
+import Achievements from './Achievements';
 
 // Firebase Firestore imports
 import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
@@ -23,7 +24,7 @@ export default function StartScreen({ onStart, onStartDuel, audioEnabled, setAud
   const [highScores, setHighScores] = useState<HighScore[]>([]);
   
   // Real-time globally synced leaderboards from Firebase
-  const [activeTab, setActiveTab] = useState<'global' | 'local'>('global');
+  const [activeTab, setActiveTab] = useState<'global' | 'local' | 'achievements'>('global');
   const [globalHighScores, setGlobalHighScores] = useState<HighScore[]>([]);
   const [loadingGlobal, setLoadingGlobal] = useState(true);
 
@@ -252,28 +253,39 @@ export default function StartScreen({ onStart, onStartDuel, audioEnabled, setAud
           </h2>
 
           {/* Toggle Tab Row */}
-          <div className="flex bg-slate-950 p-1 rounded-xl mb-4 border border-slate-800/60">
+          <div className="flex bg-slate-950 p-1 rounded-xl mb-4 border border-slate-800/60 text-[11px] font-semibold">
             <button
               type="button"
               onClick={() => setActiveTab('global')}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg transition-all cursor-pointer ${
                 activeTab === 'global'
                   ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              <Globe className="w-3.5 h-3.5" /> Dünya Çapı (Online)
+              <Globe className="w-3.5 h-3.5" /> Dünya
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('local')}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg transition-all cursor-pointer ${
                 activeTab === 'local'
                   ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              <User className="w-3.5 h-3.5" /> Yerel Skorlar
+              <User className="w-3.5 h-3.5" /> Yerel
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('achievements')}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg transition-all cursor-pointer ${
+                activeTab === 'achievements'
+                  ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <Award className="w-3.5 h-3.5" /> Rozetler
             </button>
           </div>
 
@@ -351,66 +363,80 @@ export default function StartScreen({ onStart, onStartDuel, audioEnabled, setAud
                   ))
                 )}
               </>
-            ) : highScores.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-16 text-slate-500 text-center h-full">
-                <Trophy className="w-12 h-12 stroke-[1] mb-2 text-slate-600" />
-                <p className="text-sm font-semibold text-slate-400">Yerel rekor bulunamadı.</p>
-                <p className="text-xs text-slate-600 mt-1">İlk yarışmayı bitirerek bu cihaza adınızı yazdırın!</p>
-              </div>
-            ) : (
-              highScores
-                .sort((a, b) => b.prizeAmount - a.prizeAmount)
-                .slice(0, 15)
-                .map((score, index) => (
-                  <div
-                    key={`local-${index}`}
-                    className="flex items-center justify-between bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 hover:border-amber-500/35 transition-all"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                          index === 0
-                            ? 'bg-amber-400 text-slate-950'
-                            : index === 1
-                            ? 'bg-slate-300 text-slate-950'
-                            : index === 2
-                            ? 'bg-amber-750 text-slate-100'
-                            : 'bg-slate-800 text-slate-400'
-                        }`}
-                      >
-                        {index + 1}
-                      </span>
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-sm text-slate-100 truncate max-w-[120px]">
-                          {score.nickname}
+            ) : activeTab === 'local' ? (
+              highScores.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-16 text-slate-500 text-center h-full">
+                  <Trophy className="w-12 h-12 stroke-[1] mb-2 text-slate-600" />
+                  <p className="text-sm font-semibold text-slate-400">Yerel rekor bulunamadı.</p>
+                  <p className="text-xs text-slate-600 mt-1">İlk yarışmayı bitirerek bu cihaza adınızı yazdırın!</p>
+                </div>
+              ) : (
+                highScores
+                  .sort((a, b) => b.prizeAmount - a.prizeAmount)
+                  .slice(0, 15)
+                  .map((score, index) => (
+                    <div
+                      key={`local-${index}`}
+                      className="flex items-center justify-between bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 hover:border-amber-500/35 transition-all"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span
+                          className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                            index === 0
+                              ? 'bg-amber-400 text-slate-950'
+                              : index === 1
+                              ? 'bg-slate-300 text-slate-950'
+                              : index === 2
+                              ? 'bg-amber-750 text-slate-100'
+                              : 'bg-slate-800 text-slate-400'
+                          }`}
+                        >
+                          {index + 1}
                         </span>
-                        <span className="text-slate-500 text-[10px]">
-                          Cevap: {score.levelReached}. Soru ({score.walkedAway ? 'Çekildi' : 'Yandı'})
+                        <div className="flex flex-col">
+                          <span className="font-semibold text-sm text-slate-100 truncate max-w-[120px]">
+                            {score.nickname}
+                          </span>
+                          <span className="text-slate-500 text-[10px]">
+                            Cevap: {score.levelReached}. Soru ({score.walkedAway ? 'Çekildi' : 'Yandı'})
+                          </span>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className="font-bold text-amber-400 text-sm block">
+                          {score.prize}
                         </span>
+                        <span className="text-[9px] text-slate-500">{score.date}</span>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <span className="font-bold text-amber-400 text-sm block">
-                        {score.prize}
-                      </span>
-                      <span className="text-[9px] text-slate-500">{score.date}</span>
-                    </div>
-                  </div>
-                ))
+                  ))
+              )
+            ) : (
+              <Achievements isEmbedded />
             )}
           </div>
         </motion.div>
       </div>
 
       {/* Rules / Footer */}
-      <motion.p
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.6 }}
         transition={{ delay: 0.8 }}
-        className="text-[11px] text-slate-500 text-center mt-8 max-w-md font-mono"
+        className="flex flex-col items-center gap-2 mt-8 text-center max-w-md"
       >
-        Önerilen baraj seviyeleri: 5. Soru (5.000 TL) ve 10. Soru (50.000 TL) Garanti ödüllerdir. Son karar sizindir!
-      </motion.p>
+        <p className="text-[11px] text-slate-500 font-mono leading-relaxed">
+          Önerilen baraj seviyeleri: 5. Soru (5.000 TL) ve 10. Soru (50.000 TL) Garanti ödüllerdir. Son karar sizindir!
+        </p>
+        <button
+          onClick={() => {
+            window.location.search = '?view=privacy';
+          }}
+          className="text-[10px] text-amber-500/80 hover:text-amber-400 font-bold underline cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]"
+        >
+          Gizlilik Politikası (Privacy Policy)
+        </button>
+      </motion.div>
     </div>
   );
 }

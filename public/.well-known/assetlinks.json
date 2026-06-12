@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.run.us_west1.milyoner_bilgi_yar_mas_663366277268.twa",
+      "sha256_cert_fingerprints": [
+        "5B:D6:4F:7E:DA:2F:B4:8E:64:F6:94:81:76:53:8D:4B:8C:5F:88:86:13:F1:70:72:60:DE:AA:70:BE:6D:C6:5A"
+      ]
+    }
+  }
+]

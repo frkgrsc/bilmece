@@ -137,7 +137,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         </span>
         <div className="flex items-center px-4 py-1.5 bg-slate-900/40 rounded-full border border-slate-900/50 shadow-sm backdrop-blur-md">
           <span className="text-xs font-semibold text-slate-200 tracking-widest font-mono uppercase">
-            Else Studio
+            Else STUDIO
           </span>
         </div>
       </motion.div>

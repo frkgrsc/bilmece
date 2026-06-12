@@ -65,6 +65,24 @@ export const QUESTIONS_POOL: Question[] = [
     category: 'Doğa Bilimleri',
     explanation: 'Yıldızlar, geceleri gökyüzünde ışık saçan gök cisimleridir.'
   },
+  {
+    id: 'q1_8',
+    level: 1,
+    text: 'Türkiye\'nin başkenti Ankara hangi coğrafi bölgemizde yer almaktadır?',
+    options: { A: 'İç Anadolu', B: 'Marmara', C: 'Ege', D: 'Karadeniz' },
+    correctOption: 'A',
+    category: 'Coğrafya',
+    explanation: 'Ankara, Türkiye\'nin tam ortasında bulunan İç Anadolu Bölgesi sınırları içerisinde yer almaktadır.'
+  },
+  {
+    id: 'q1_9',
+    level: 1,
+    text: 'Yazı yazmak veya çizim yapmak için kullanılan, kurşun ve tükenmez gibi çeşitleri olan kırtasiye malzemesi hangisidir?',
+    options: { A: 'Silgi', B: 'Kalem', C: 'Defter', D: 'Bant' },
+    correctOption: 'B',
+    category: 'Genel Kültür',
+    explanation: 'Kalem, insanlığın bilgi aktarımı ve yazı yazma aracı olarak binlerce yıldır farklı formlarda kullandığı en temel kırtasiye gereçlerinden biridir.'
+  },
 
   // ==================== LEVEL 2 ====================
   {
@@ -129,6 +147,24 @@ export const QUESTIONS_POOL: Question[] = [
     correctOption: 'B',
     category: 'Türkçe & Deyimler',
     explanation: 'Ekmek kapısı, bir insanın hayatını sürdürmek için kazanç sağladığı iş veya meslek anlamına gelir.'
+  },
+  {
+    id: 'q2_8',
+    level: 2,
+    text: 'Türkiye Cumhuriyeti\'nin ilk Cumhurbaşkanı kimdir?',
+    options: { A: 'İsmet İnönü', B: 'Mustafa Kemal Atatürk', C: 'Celal Bayar', D: 'Adnan Menderes' },
+    correctOption: 'B',
+    category: 'Tarih',
+    explanation: 'Mustafa Kemal Atatürk, Cumhuriyet\'in ilanından sonra TBMM tarafından oy birliğiyle Türkiye Cumhuriyeti\'nin ilk cumhurbaşkanı seçilmiştir.'
+  },
+  {
+    id: 'q2_9',
+    level: 2,
+    text: 'Futbolda bir takım sahaya kaç oyuncu ile çıkar?',
+    options: { A: '7', B: '9', C: '11', D: '15' },
+    correctOption: 'C',
+    category: 'Genel Kültür',
+    explanation: 'Nizami bir futbol maçında her iki takım da sahaya kaleci dahil olmak üzere tam 11\'er oyuncuyla çıkar.'
   },
 
   // ==================== LEVEL 3 ====================
@@ -195,6 +231,24 @@ export const QUESTIONS_POOL: Question[] = [
     category: 'Türkçe & Atasözleri',
     explanation: 'İnsanların küçük yaşlarda çok daha kolay eğitilip şekillendirilebileceğini anlatır.'
   },
+  {
+    id: 'q3_8',
+    level: 3,
+    text: 'Dünya üzerindeki en büyük tuzlu su kütlesine verilen coğrafi isim hangisidir?',
+    options: { A: 'Dere', B: 'Göl', C: 'Okyanus', D: 'Baraj' },
+    correctOption: 'C',
+    category: 'Coğrafya',
+    explanation: 'Okyanuslar, kıtaları birbirinden ayıran çok geniş ve derin su kütleleridir ve yer kürenin yaklaşık %71\'ini kaplarlar.'
+  },
+  {
+    id: 'q3_9',
+    level: 3,
+    text: 'Tarihte parayı bulan ve ilk kez ticaret hayatında takas usulü yerine metal para kullanan Anadolu medeniyeti hangisidir?',
+    options: { A: 'Lidyalılar', B: 'Hititler', C: 'Sümerler', D: 'Urartular' },
+    correctOption: 'A',
+    category: 'Tarih',
+    explanation: 'Lidyalılar, M.Ö. 7. yüzyılda Manisa (Sardes) civarında madeni parayı basıp ticarette çığır açmışlardır.'
+  },
 
   // ==================== LEVEL 4 ====================
   {
@@ -259,6 +313,24 @@ export const QUESTIONS_POOL: Question[] = [
     correctOption: 'B',
     category: 'Teknoloji',
     explanation: 'Web sitelerindeki bilgileri ve içerikleri tarayan, kullanıcı aramalarına göre listeleyen motorlardır.'
+  },
+  {
+    id: 'q4_8',
+    level: 4,
+    text: '"Çok sevinmek" anlamında kullanılan, sevinçten ne yapacağını bilememeyi belirten deyim hangisidir?',
+    options: { A: 'Etekleri zil çalmak', B: 'Gözü arkada kalmak', C: 'Burnu havada olmak', D: 'Kulak kabartmak' },
+    correctOption: 'A',
+    category: 'Genel Kültür',
+    explanation: '"Etekleri zil çalmak" deyimi, bir olay karşısında duyulan aşırı mutluluğu ve coşkuyu ifade eder.'
+  },
+  {
+    id: 'q4_9',
+    level: 4,
+    text: 'Türkiye\'nin üç tarafı denizlerle çevrilidir. Kuzeyde yer alan denizimizin adı nedir?',
+    options: { A: 'Ege Denizi', B: 'Akdeniz', C: 'Karadeniz', D: 'Marmara Denizi' },
+    correctOption: 'C',
+    category: 'Coğrafya',
+    explanation: 'Türkiye\'nin kuzey sınırını belirleyen deniz Karadeniz\'dir; zengin biyolojik çeşitliliğe ve karakteristik hamsiye ev sahipliği yapar.'
   },
 
   // ==================== LEVEL 5 ====================
@@ -325,6 +397,24 @@ export const QUESTIONS_POOL: Question[] = [
     category: 'Fizik / Kimya',
     explanation: 'Saf su, standart deniz basıncında tam olarak 100 °C\'de kaynamaya başlar.'
   },
+  {
+    id: 'q5_8',
+    level: 5,
+    text: 'Osmanlı Devleti\'nin kurucusu ve devlete adını veren ilk padişah kimdir?',
+    options: { A: 'Ertuğrul Gazi', B: 'Osman Bey', C: 'Orhan Bey', D: 'I. Murad' },
+    correctOption: 'B',
+    category: 'Tarih',
+    explanation: 'Osman Gazi, 1299 yılında Söğüt ve Domaniç civarında bağımsızlığını ilan ederek Osmanlı İmparatorluğu\'nun temelini atmıştır.'
+  },
+  {
+    id: 'q5_9',
+    level: 5,
+    text: 'Nobel ödülleri hangi ülkeye ait olan bir komite tarafından her yıl Stockholm\'de dağıtılır (Barış Ödülü hariç)?',
+    options: { A: 'Norveç', B: 'İsveç', C: 'Finlandiya', D: 'Danimarka' },
+    correctOption: 'B',
+    category: 'Genel Kültür',
+    explanation: 'Nobel Ödülleri, İsveçli mucit Alfred Nobel\'in vasiyeti doğrultusunda İsveç Kraliyet Bilimler Akademisi ve ilgili komiteler tarafından verilmektedir.'
+  },
 
   // ==================== LEVEL 6 ====================
   {
@@ -389,6 +479,24 @@ export const QUESTIONS_POOL: Question[] = [
     correctOption: 'A',
     category: 'Türkçe & Atasözleri',
     explanation: 'İnsanın gücünün sınırlı olduğunu ve aynı anda iki önemli ve ağır işi birden tam yapamayacağını belirtir.'
+  },
+  {
+    id: 'q6_8',
+    level: 6,
+    text: 'Dünyanın en küçük yüzölçümüne sahip bağımsız devleti hangisidir?',
+    options: { A: 'Monako', B: 'San Marino', C: 'Lichtenstein', D: 'Vatikan' },
+    correctOption: 'D',
+    category: 'Coğrafya',
+    explanation: 'Roma içinde yer alan Vatikan (Citta del Vaticano), 0.44 kilometrekarelik yüzölçümüyle dünyanın en küçük bağımsız ülkesidir.'
+  },
+  {
+    id: 'q6_9',
+    level: 6,
+    text: 'Mustafa Kemal Atatürk\'ün askeri eğitimini tamamlayıp kurmay yüzbaşı olarak mezun olduğu ünlü harp akademisi hangi şehirdedir?',
+    options: { A: 'Selanik', B: 'Manastır', C: 'İstanbul', D: 'Ankara' },
+    correctOption: 'C',
+    category: 'Tarih',
+    explanation: 'Atatürk, 1905 yılında döneminde Osmanlı İmparatorluğu\'nun başkenti olan İstanbul Harbiye\'deki Mekteb-i Erkân-ı Harbiye\'den mezun olmuştur.'
   },
 
   // ==================== LEVEL 7 ====================
@@ -455,6 +563,24 @@ export const QUESTIONS_POOL: Question[] = [
     category: 'Müzik Tarihi',
     explanation: 'Onuncu Yıl Marşı, Cemal Reşit Rey tarafından bestelenmiştir; sözleri Behçet Kemal Çağlar ve Faruk Nafiz Çamlıbel\'e aittir.'
   },
+  {
+    id: 'q7_8',
+    level: 7,
+    text: 'İki ana bileşen olan çimento ve su ile kum ve çakıl gibi agrega maddelerin karıştırılmasıyla elde edilen yapı malzemesi hangisidir?',
+    options: { A: 'Tuğla', B: 'Beton', C: 'Alçı', D: 'Kireç' },
+    correctOption: 'B',
+    category: 'Genel Kültür',
+    explanation: 'Beton, bağlayıcı çimento hamuru ve dolgu malzemelerinin su ile hidrasyon reaksiyonuna girmesi sonucu sertleşen dayanıklı bir yapı bileşenidir.'
+  },
+  {
+    id: 'q7_9',
+    level: 7,
+    text: 'Afrika kıtasının en ucunda yer alan ve Ümit Burnu\'na ev sahipliği yapan ülke hangisidir?',
+    options: { A: 'Mısır', B: 'Nijerya', C: 'Güney Afrika Cumhuriyeti', D: 'Kenya' },
+    correctOption: 'C',
+    category: 'Coğrafya',
+    explanation: 'Ümit Burnu (Cape of Good Hope), Afrika kıtasının güneybatı ucunda yer alır ve Güney Afrika Cumhuriyeti topraklarındadır.'
+  },
 
   // ==================== LEVEL 8 ====================
   {
@@ -519,6 +645,24 @@ export const QUESTIONS_POOL: Question[] = [
     correctOption: 'B',
     category: 'Bilim Tarihi',
     explanation: 'Prof. Dr. Aziz Sancar, hücrelerin hasar gören DNA\'ları nasıl onardığını haritalandırarak Nobel Ödülü kazanmıştır.'
+  },
+  {
+    id: 'q8_8',
+    level: 8,
+    text: '1071 yılında Selçuklu Sultanı Alparslan liderliğindeki Türk ordusunun Bizans\'ı yenerek Anadolu\'nun kapılarını Türklere açtığı Savaş hangisidir?',
+    options: { A: 'Miryokefalon Savaşı', B: 'Dandanakan Savaşı', C: 'Malazgirt Meydan Muharebesi', D: 'Kösedağ Savaşı' },
+    correctOption: 'C',
+    category: 'Tarih',
+    explanation: 'Muş yakınlarında gerçekleşen Malazgirt Savaşı, Bizans İmparatoru Romen Diyojen ile Sultan Alparslan arasında yapılmış ve Türklerin Anadolu\'ya kalıcı olarak yerleşmesini sağlamıştır.'
+  },
+  {
+    id: 'q8_9',
+    level: 8,
+    text: 'Dünyaca ünlü yazar Antoine de Saint-Exupéry\'nin kaleme aldığı, başka bir gezegenden gelen çocuğun hikayesini anlatan klasik kitap hangisidir?',
+    options: { A: 'Küçük Prens', B: 'Robinson Crusoe', C: 'Peter Pan', D: 'Oliver Twist' },
+    correctOption: 'A',
+    category: 'Genel Kültür',
+    explanation: '"Küçük Prens" (Le Petit Prince), yetişkinlerin dünyasını çocuk gözüyle eleştiren, dünyada en çok dile çevrilen kutsal dışı kitaplardan biridir.'
   },
 
   // ==================== LEVEL 9 ====================
@@ -585,6 +729,24 @@ export const QUESTIONS_POOL: Question[] = [
     category: 'Coğrafya',
     explanation: 'Everest Dağı, Asya\'da Himalayalar sıradağlarında yer almakta olup, Nepal ile Çin (Tibet) sınır çizgisi üzerindedir.'
   },
+  {
+    id: 'q9_8',
+    level: 9,
+    text: 'Amerika Birleşik Devletleri ile Rusya\'yı ayıran, aynı zamanda Asya ile Kuzey Amerika kıtaları arasındaki en dar boğaz olan su geçidi hangisidir?',
+    options: { A: 'Cebelitarık Boğazı', B: 'Bering Boğazı', C: 'Malakka Boğazı', D: 'Hürmüz Boğazı' },
+    correctOption: 'B',
+    category: 'Coğrafya',
+    explanation: 'Bering Boğazı, Alaska ile Sibirya arasındadır ve tarih öncesi dönemde insanların Amerika kıtasına göç yolu (Bering Köprüsü) olmuştur.'
+  },
+  {
+    id: 'q9_9',
+    level: 9,
+    text: 'İlk çağlarda Mezopotamya\'da çivi yazısını icat ederek insanlık tarihinde tarihi devirleri (yazılı tarihi) başlatan uygarlık hangisidir?',
+    options: { A: 'Sümerler', B: 'Babiller', C: 'Asurlular', D: 'Akadlar' },
+    correctOption: 'A',
+    category: 'Tarih',
+    explanation: 'M.Ö. 3200 civarında çivi yazısını geliştiren Sümerler uygarlığı, insanlığı karanlık çağlardan yazılı tarih devrine taşımıştır.'
+  },
 
   // ==================== LEVEL 10 ====================
   {
@@ -649,6 +811,15 @@ export const QUESTIONS_POOL: Question[] = [
     correctOption: 'B',
     category: 'Coğrafya',
     explanation: 'Kuzey Afrika\'nın büyük kısmını kaplayan Büyük Sahra Çölü, yaklaşık 9 milyon kilometrekarelik bir alana yayılmaktadır.'
+  },
+  {
+    id: 'q10_8',
+    level: 10,
+    text: 'Fransız ihtilalinin simgesi haline gelen ve monarşi karşıtlarının fırtına gibi bastığı, Paris\'teki ünlü tarihi hapishane neresidir?',
+    options: { A: 'Alcatraz', B: 'Guantanamo', C: 'Bastille Kalesi', D: 'Chateau d\'If' },
+    correctOption: 'C',
+    category: 'Genel Kültür',
+    explanation: '14 Temmuz 1789\'da Bastille Hapishanesi\'nin halk tarafından basılması coşkuyla karşılanmış ve Fransız Devrimi\'nin resmi başlangıcı sayılmıştır.'
   },
 
   // ==================== LEVEL 11 ====================
@@ -715,6 +886,15 @@ export const QUESTIONS_POOL: Question[] = [
     category: 'Biyoloji',
     explanation: 'Sentrozom hücre bölünmesinde kendini eşleyerek zıt kutuplara gider ve mikrotübülleri çekerek kromozom ayrılmasını sağlar.'
   },
+  {
+    id: 'q11_8',
+    level: 11,
+    text: 'Dünyanın en uzun sıradağlar zinciri olan ve Güney Amerika kıtası boyunca baştan başa uzanan dağlar hangileridir?',
+    options: { A: 'Himalayalar', B: 'Alpler', C: 'And Dağları', D: 'Rocky Dağları' },
+    correctOption: 'C',
+    category: 'Coğrafya',
+    explanation: 'And Dağları, Venezuela\'dan başlayıp Şili\'ye kadar yaklaşık 7.000 kilometre boyunca uzanan, dünyanın en uzun karasal sıradağ zinciridir.'
+  },
 
   // ==================== LEVEL 12 ====================
   {
@@ -780,6 +960,15 @@ export const QUESTIONS_POOL: Question[] = [
     category: 'Mühendislik Tarihi',
     explanation: 'Sikorsky, 1939 yılında üç kanatlı tek rotor tasarımını başarıyla uçurmuş ve bugünkü helikopter sistemlerinin temelini atmıştır.'
   },
+  {
+    id: 'q12_8',
+    level: 12,
+    text: 'Fatih Sultan Mehmet\'in fetihten sonra camiye dönüştürdüğü, Bizans İmparatoru Jüstinyen tarafından 6. yüzyılda yaptırılan şaheser hangisidir?',
+    options: { A: 'Ayasofya', B: 'Kariye Camii', C: 'Yerebatan Sarnıcı', D: 'Galata Kulesi' },
+    correctOption: 'A',
+    category: 'Tarih',
+    explanation: 'M.S. 537 yılında ibadete açılan Ayasofya (Hagia Sophia), çağının en muazzam mühendislik ve mimari anıtlarından biridir.'
+  },
 
   // ==================== LEVEL 13 ====================
   {
@@ -844,6 +1033,15 @@ export const QUESTIONS_POOL: Question[] = [
     correctOption: 'C',
     category: 'Mimarlık / Coğrafya',
     explanation: 'Burj Khalifa, Birleşik Arap Emirlikleri\'nin Dubai kentinde 2010 yılında açılmış ultra yüksek gökdelendir.'
+  },
+  {
+    id: 'q13_8',
+    level: 13,
+    text: 'İngiliz fizikçi Isaac Newton\'un yerçekimi teorisini, hareket yasalarını ve diferansiyel hesabı açıkladığı 1687 tarihli başyapıtı hangisidir?',
+    options: { A: 'Opticks', B: 'Principia Mathematica (Philosophiae Naturalis Principia Mathematica)', C: 'Arithmetica Universalis', D: 'Dialogue Concerning the Two Chief World Systems' },
+    correctOption: 'B',
+    category: 'Genel Kültür',
+    explanation: 'Kısaca "Principia" olarak bilinen bu anıtsal kitap, klasik mekaniğin kurucu ilkelerini belirleyerek bilim tarihini kökten değiştirmiştir.'
   },
 
   // ==================== LEVEL 14 ====================

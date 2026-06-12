@@ -7,10 +7,12 @@ import PhoneFriendDialog from './components/PhoneFriendDialog';
 import AudienceDialog from './components/AudienceDialog';
 import DuelQuizScreen from './components/DuelQuizScreen';
 import SplashScreen from './components/SplashScreen';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import { findOrCreateDuelRoom, leaveDuelRoom } from './utils/multiplayer';
 import { QUESTIONS_POOL } from './data/questions';
 import { Question, Joker, JokerType, PRIZE_LEVELS, AnswerState, HighScore, PhoneFriendSuggestion } from './types';
 import audio from './utils/audio';
+import { checkAndUnlockAchievements } from './utils/achievements';
 import { Volume2, VolumeX, Sparkles, AlertCircle, Phone, Users, Swords } from 'lucide-react';
 
 // Firebase imports
@@ -35,6 +37,17 @@ export default function App() {
   const [isMatching, setIsMatching] = useState(false);
   const [matchedRoomId, setMatchedRoomId] = useState<string | null>(null);
   const [matchingError, setMatchingError] = useState<string | null>(null);
+
+  // Privacy Policy state
+  const [isPrivacyView, setIsPrivacyView] = useState(false);
+
+  // Check URL parameter for privacy routing on boot
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('view') === 'privacy' || params.get('page') === 'privacy' || window.location.hash === '#privacy') {
+      setIsPrivacyView(true);
+    }
+  }, []);
 
   // Sign in anonymously and verify Firestore network access on boot
   useEffect(() => {
@@ -90,23 +103,45 @@ export default function App() {
 
   // Walked away status
   const [walkedAway, setWalkedAway] = useState(false);
+  const [newlyUnlockedAchievements, setNewlyUnlockedAchievements] = useState<any[]>([]);
 
   // Track past questions seen in switch question to avoid picking the exact same one
   const [usedQuestionIds, setUsedQuestionIds] = useState<string[]>([]);
 
-  // Initialize selected set on game start
+  // Initialize selected set on game start, prioritizing questions the user hasn't seen recently
   const generateGameQuestions = (): Question[] => {
     const selected: Question[] = [];
     const usedIds: string[] = [];
 
+    // Let's get seen questions from localStorage
+    const seenStr = localStorage.getItem('milyoner_seen_question_ids') || '';
+    let seenList = seenStr ? seenStr.split(',') : [];
+
     for (let l = 1; l <= 15; l++) {
       const candidates = QUESTIONS_POOL.filter((q) => q.level === l);
       if (candidates.length > 0) {
-        const randomCandidate = candidates[Math.floor(Math.random() * candidates.length)];
-        selected.push(randomCandidate);
-        usedIds.push(randomCandidate.id);
+        // Filter candidates that haven't been seen recently
+        let unseenCandidates = candidates.filter((q) => !seenList.includes(q.id));
+        
+        if (unseenCandidates.length === 0) {
+          // If we have seen all questions of this level, reset tracking for this level in seenList
+          const levelIds = candidates.map((q) => q.id);
+          seenList = seenList.filter((id) => !levelIds.includes(id));
+          unseenCandidates = candidates;
+        }
+
+        const chosen = unseenCandidates[Math.floor(Math.random() * unseenCandidates.length)];
+        selected.push(chosen);
+        usedIds.push(chosen.id);
+
+        if (!seenList.includes(chosen.id)) {
+          seenList.push(chosen.id);
+        }
       }
     }
+
+    // Persist seen question IDs in localStorage
+    localStorage.setItem('milyoner_seen_question_ids', seenList.join(','));
     setUsedQuestionIds(usedIds);
     return selected;
   };
@@ -119,6 +154,7 @@ export default function App() {
 
     // Reset game parameters
     setLevel(1);
+    setNewlyUnlockedAchievements([]);
     const questions = generateGameQuestions();
     setGameQuestions(questions);
     setCurrentQuestion(questions[0]);
@@ -235,6 +271,20 @@ export default function App() {
     scoresList.push(newRecord);
     localStorage.setItem('milyoner_highscores', JSON.stringify(scoresList));
 
+    // Calculate and trigger achievement checks
+    try {
+      const usedJokersList = jokers.filter((j) => j.used).map((j) => j.id);
+      const achResult = checkAndUnlockAchievements({
+        levelReached: finalLevel,
+        walkedAway: isWalked,
+        timed: timed,
+        jokersUsed: usedJokersList,
+      });
+      setNewlyUnlockedAchievements(achResult.newlyUnlocked);
+    } catch (achErr) {
+      console.error("Failed to check achievements:", achErr);
+    }
+
     // Save online in Firebase Firestore
     try {
       if (!auth.currentUser) {
@@ -283,9 +333,19 @@ export default function App() {
       setActiveJokerModal('audience');
     } else if (jokerId === 'switchQuestion') {
       // Find candidate questions of the same level that haven't been used yet
-      const candidates = QUESTIONS_POOL.filter(
-        (q) => q.level === level && !usedQuestionIds.includes(q.id)
+      const seenStr = localStorage.getItem('milyoner_seen_question_ids') || '';
+      const seenList = seenStr ? seenStr.split(',') : [];
+
+      let candidates = QUESTIONS_POOL.filter(
+        (q) => q.level === level && !usedQuestionIds.includes(q.id) && !seenList.includes(q.id)
       );
+
+      // If all candidates of the same level have been seen in previous games, fallback to just unused in this session
+      if (candidates.length === 0) {
+        candidates = QUESTIONS_POOL.filter(
+          (q) => q.level === level && !usedQuestionIds.includes(q.id)
+        );
+      }
 
       let replacement: Question;
       if (candidates.length > 0) {
@@ -294,6 +354,12 @@ export default function App() {
         // Fallback to any of the same level
         const sameLevel = QUESTIONS_POOL.filter((q) => q.level === level && q.id !== currentQuestion.id);
         replacement = sameLevel.length > 0 ? sameLevel[0] : currentQuestion;
+      }
+
+      // Add the replacement to the seen list and persist
+      if (!seenList.includes(replacement.id)) {
+        const updatedSeen = [...seenList, replacement.id];
+        localStorage.setItem('milyoner_seen_question_ids', updatedSeen.join(','));
       }
 
       setRemovedOptions([]);
@@ -393,6 +459,17 @@ export default function App() {
 
   const finalPrizeWon = calculateFinalPrize(walkedAway || level === 16, level).display;
 
+  if (isPrivacyView) {
+    return (
+      <PrivacyPolicy 
+        onBack={() => {
+          setIsPrivacyView(false);
+          window.history.pushState({}, '', window.location.pathname);
+        }} 
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-radial from-slate-900 via-slate-950 to-black font-sans relative overflow-x-hidden pt-3 pb-8">
       {/* Background Ambience Lines */}
@@ -489,6 +566,7 @@ export default function App() {
                 onRestart={handleRestart}
                 failedOnQuestionText={currentQuestion?.text}
                 isPerfectWin={level === 16}
+                newlyUnlockedAchievements={newlyUnlockedAchievements}
               />
             </motion.div>
           ) : (

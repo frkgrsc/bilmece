@@ -1,0 +1,53 @@
+{
+  "name": "Milyoner Bilgi Yarışması",
+  "short_name": "Milyoner",
+  "description": "Klasik milyoner formatında, zorluk derecelerine göre kategorize edilmiş sorular ve interaktif jokerler içeren ses efektli bilgi yarışması oyunu.",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#020617",
+  "background_color": "#020617",
+  "id": "/?source=pwa",
+  "dir": "ltr",
+  "lang": "tr",
+  "categories": [
+    "games",
+    "education"
+  ],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon_maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot1.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Milyoner Mobil Yarışma Ekranı"
+    },
+    {
+      "src": "/screenshot2.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Milyoner Masaüstü Liderlik Paneli"
+    }
+  ]
+}

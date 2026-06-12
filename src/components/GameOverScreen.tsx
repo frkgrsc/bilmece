@@ -10,6 +10,7 @@ interface GameOverScreenProps {
   onRestart: () => void;
   failedOnQuestionText?: string;
   isPerfectWin: boolean;
+  newlyUnlockedAchievements?: any[];
 }
 
 export default function GameOverScreen({
@@ -20,6 +21,7 @@ export default function GameOverScreen({
   onRestart,
   failedOnQuestionText,
   isPerfectWin,
+  newlyUnlockedAchievements,
 }: GameOverScreenProps) {
   const dateStr = new Date().toLocaleDateString('tr-TR', {
     day: 'numeric',
@@ -112,6 +114,30 @@ export default function GameOverScreen({
             </div>
           </div>
         </div>
+
+        {/* Newly Unlocked Achievements */}
+        {newlyUnlockedAchievements && newlyUnlockedAchievements.length > 0 && (
+          <div className="mb-8 text-left bg-slate-950/40 border border-slate-800 rounded-2xl p-5 relative overflow-hidden">
+            <div className="flex items-center gap-2 mb-3.5 border-b border-slate-900 pb-2.5">
+              <span className="text-[10px] text-amber-400 font-bold uppercase tracking-widest flex items-center gap-1.5 animate-pulse">
+                🏆 Yeni Başarım Açıldı!
+              </span>
+            </div>
+            <div className="space-y-3">
+              {newlyUnlockedAchievements.map((ach) => (
+                <div key={ach.id} className="flex items-center gap-3 bg-slate-900/60 border border-slate-800/50 p-2.5 rounded-xl">
+                  <div className={`w-10 h-10 shrink-0 rounded-lg bg-gradient-to-br ${ach.badgeColor} flex items-center justify-center text-xl shadow-md border`}>
+                    {ach.icon}
+                  </div>
+                  <div>
+                    <h5 className="text-xs font-bold text-slate-100">{ach.title}</h5>
+                    <p className="text-[10px] text-slate-400 mt-1">{ach.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Certificate Section */}
         <div className="border border-amber-500/25 rounded-xl bg-slate-950/40 p-5 mb-8 text-center relative font-serif">
